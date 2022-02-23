@@ -1,18 +1,22 @@
 <template>
     <div class="container">
-  <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 justify-content-center">
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 justify-content-center">
+            <AlbumSingolo
+            v-for="(album, indice) in listaAlbum" 
+            :key="indice"
+            :album="album"
+            >
+            </AlbumSingolo>
+            <!-- <div class="text-center" v-for="(album, indice) in listaAlbum" :key="indice">
+                <div class="ms_box">
+                    <img class="ms_img-fluid" :src="album.poster" alt="">
+                    <h3>{{album.title}}</h3>
+                    <h5>{{album.author}}</h5>
+                    <h5>{{album.year}}</h5>
+                </div>  
+            </div> -->
 
-    <div class="text-center" v-for="(album, indice) in listaAlbum" :key="indice">
-        <div class="ms_box">
-            <img class="ms_img-fluid" :src="album.poster" alt="">
-            <h3>{{album.title}}</h3>
-            <h5>{{album.author}}</h5>
-            <h5>{{album.year}}</h5>
         </div>
-      
-    </div>
-
-  </div>
 </div>
 </template>
 
@@ -20,6 +24,7 @@
 
     // integro axios
     const axios = require('axios');
+    import AlbumSingolo from './partials/AlbumSingolo.vue'
 
 export default {
     name: 'MyMain',
@@ -27,6 +32,9 @@ export default {
         return{
             listaAlbum: []
         }
+    },
+    components:{
+        AlbumSingolo,
     },
     methods:{
         getAlbum(){
@@ -53,16 +61,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .ms_img-fluid{
-        margin: 10px 0px;
-        width: 90%;
-}
+    // .ms_img-fluid{
+    //     margin: 10px 0px;
+    //     width: 90%;
+    // }
 
-    .ms_box{
-        width: 200px;
-        min-height: 380px;
-        background-color: #2e3a46;
-        margin: 30px;
-        padding: 5px;
-    }
+    // .ms_box{
+    //     width: 200px;
+    //     min-height: 380px;
+    //     background-color: #2e3a46;
+    //     margin: 30px;
+    //     padding: 5px;
+    // }
 </style>
