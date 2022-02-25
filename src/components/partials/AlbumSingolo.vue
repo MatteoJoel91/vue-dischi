@@ -1,6 +1,6 @@
 <template>
-    <div class="text-center">
-        <div class="ms_box">
+    <div class="text-center ">
+        <div class="ms_box ">
             <img class="ms_img-fluid" :src="album.poster" alt="">
             <h3>{{album.title}}</h3>
             <h5>{{album.author}}</h5>

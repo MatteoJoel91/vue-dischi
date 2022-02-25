@@ -1,20 +1,14 @@
 <template>
     <div class="container">
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 justify-content-center">
+
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 justify-content-center ">
+
             <AlbumSingolo
-            v-for="(album, indice) in listaAlbum" 
+            v-for="(album, indice) in filteredAlbum" 
             :key="indice"
             :album="album"
             >
             </AlbumSingolo>
-            <!-- <div class="text-center" v-for="(album, indice) in listaAlbum" :key="indice">
-                <div class="ms_box">
-                    <img class="ms_img-fluid" :src="album.poster" alt="">
-                    <h3>{{album.title}}</h3>
-                    <h5>{{album.author}}</h5>
-                    <h5>{{album.year}}</h5>
-                </div>  
-            </div> -->
 
         </div>
 </div>
@@ -28,13 +22,30 @@
 
 export default {
     name: 'MyMain',
+    props: {
+        'selectedGenre' :String,
+        },
     data(){
         return{
-            listaAlbum: []
+            listaAlbum: [],
+            listaGeneri: [],
         }
     },
     components:{
         AlbumSingolo,
+    },
+    computed:{
+        filteredAlbum(){
+            if(this.selectedGenre == ''){
+                return this.listaAlbum;
+            }else{
+               return this.listaAlbum.filter(element =>{
+                return element.genre == this.selectedGenre;
+                }); 
+            }
+            
+            
+        }
     },
     methods:{
         getAlbum(){
@@ -44,6 +55,14 @@ export default {
                 // handle success
                 this.listaAlbum = response.data.response;
                 console.log(response);
+
+                for (let i = 0; i < this.listaAlbum.length; i++) {
+                    if(!this.listaGeneri.includes(response.data.response[i].genre)){
+                        this.listaGeneri.push(response.data.response[i].genre);    
+                    } 
+                }
+                console.log(this.listaGeneri);
+                this.$emit("genresReady", this.listaGeneri);
             })
             .catch(function (error) {
                 // handle error
@@ -54,6 +73,7 @@ export default {
             });
         }
     },
+    
     created(){
         this.getAlbum();
     }
@@ -61,16 +81,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    // .ms_img-fluid{
-    //     margin: 10px 0px;
-    //     width: 90%;
-    // }
-
-    // .ms_box{
-    //     width: 200px;
-    //     min-height: 380px;
-    //     background-color: #2e3a46;
-    //     margin: 30px;
-    //     padding: 5px;
-    // }
+    
 </style>
